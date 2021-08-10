@@ -11,7 +11,7 @@ final kPrimeTextTheme = GoogleFonts.patrickHand(
 
 final kSecondText = GoogleFonts.lobster(
     fontWeight: FontWeight.bold,
-    fontSize: 25,
+    fontSize: 24,
     color: Colors.white,
     letterSpacing: 3.0);
 
@@ -19,6 +19,12 @@ final kLetterText = GoogleFonts.patrickHand(
   fontSize: 28,
   fontWeight: FontWeight.bold,
   color: Colors.white,
+);
+
+final kHintIcon = Icon(
+  Icons.lightbulb,
+  color: Colors.yellow,
+  size: 25,
 );
 
 const List<String> alphabet = const [

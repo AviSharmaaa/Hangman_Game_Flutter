@@ -189,6 +189,12 @@ class _TimerGameState extends State<TimerGame> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    startGame();
+  }
+
+  @override
   void dispose() {
     _timer!.cancel();
     super.dispose();
@@ -204,7 +210,7 @@ class _TimerGameState extends State<TimerGame> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Center(
                   child: Stack(
@@ -221,9 +227,6 @@ class _TimerGameState extends State<TimerGame> {
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  width: 20,
                 ),
                 Container(
                   child: Row(
@@ -248,37 +251,22 @@ class _TimerGameState extends State<TimerGame> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 20,
-                ),
-                Row(
-                  children: <Widget>[
-                    InkWell(
-                      child: Icon(
-                        Icons.lightbulb,
-                        color: Colors.yellow,
+                InkWell(
+                  child: Row(
+                    children: [
+                      kHintIcon,
+                      Text(
+                        "$hint",
+                        style: GoogleFonts.lobster(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
                       ),
-                      onTap: () {
-                        getHint();
-                      },
-                    ),
-                    Text(
-                      "$hint",
-                      style: GoogleFonts.lobster(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
-                  child: Text("START GAME"),
-                  onPressed: () {
-                    startGame();
+                    ],
+                  ),
+                  onTap: () {
+                    getHint();
                   },
                 ),
               ],

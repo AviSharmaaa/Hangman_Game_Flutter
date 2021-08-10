@@ -158,6 +158,12 @@ class _EasyGameState extends State<EasyGame> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    startGame();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -168,7 +174,7 @@ class _EasyGameState extends State<EasyGame> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Center(
                   child: Stack(
@@ -186,31 +192,22 @@ class _EasyGameState extends State<EasyGame> {
                     ],
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    InkWell(
-                      child: Icon(
-                        Icons.lightbulb,
-                        color: Colors.yellow,
-                      ),
-                      onTap: () {
-                        getHint();
-                      },
-                    ),
-                    Text(
-                      "$hint",
-                      style: GoogleFonts.lobster(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  child: Text("START GAME"),
-                  onPressed: () {
-                    startGame();
+                InkWell(
+                  child: Row(
+                    children: [
+                      kHintIcon,
+                      Text(
+                        "$hint",
+                        style: GoogleFonts.lobster(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                  onTap: () {
+                    getHint();
                   },
                 ),
               ],
