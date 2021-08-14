@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const kPrimeColor = Color(0xFF421b9b);
+final kPrimeColor = Colors.grey[850];
 
-final kPrimeTextTheme = GoogleFonts.patrickHand(
+final kPrimeTextTheme = GoogleFonts.lobster(
     fontSize: 55,
-    fontWeight: FontWeight.w300,
-    color: Colors.white,
+    fontWeight: FontWeight.w500,
+    foreground: Paint()..shader = textGradient,
     letterSpacing: 3.0);
 
 final kSecondText = GoogleFonts.lobster(
@@ -26,6 +26,10 @@ final kHintIcon = Icon(
   color: Colors.yellow,
   size: 25,
 );
+
+final Shader textGradient = LinearGradient(
+  colors: <Color>[Color(0xff6c72cb), Color(0xffcb69c1)],
+).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
 const List<String> alphabet = const [
   'A',
@@ -55,22 +59,6 @@ const List<String> alphabet = const [
   'Y',
   'Z',
 ];
-
-String words = "";
-
-List<String>? word;
-
-var wordToGuess = <String>[];
-
-var nosOfGuesses = 5;
-
-String alertBoxWord = "";
-
-var wordsMatched = 0;
-
-String verdict = "";
-
-int hint = 0;
 
 final hangmanProgress = [
   AssetImage("assets/images/hang5.png"),

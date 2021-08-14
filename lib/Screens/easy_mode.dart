@@ -1,44 +1,37 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:english_words/english_words.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hangman_game/Screens/YouLose.dart';
 import 'package:hangman_game/constants.dart';
 
-class TimerGame extends StatefulWidget {
+class EasyGame extends StatefulWidget {
   @override
-  _TimerGameState createState() => _TimerGameState();
+  _EasyGameState createState() => _EasyGameState();
 }
 
-class _TimerGameState extends State<TimerGame> {
-  Timer? _timer;
+class _EasyGameState extends State<EasyGame> {
+  String words = "";
+  List<String>? word;
+  var wordToGuess = <String>[];
+  int nosOfGuesses = 5;
+  String alertBoxWord = "";
+  int wordsMatched = 0;
+  String verdict = "";
+  int hint = 0;
+  int streak = 0;
 
-  int _startCountDown = 0;
-
-  startTimer() {
-    _startCountDown = 60;
-    const onSec = const Duration(seconds: 1);
-    if (_timer != null) {
-      _timer!.cancel();
-      _startCountDown = 60;
+  resetGame(bool value) {
+    if (value) {
+      startGame();
+      streak = 0;
     }
+  }
 
-    _timer = new Timer.periodic(
-      onSec,
-      (Timer timer) {
-        if (_startCountDown == 0) {
-          setState(() {
-            timer.cancel();
-          });
-          showAlertDialog("You ran out of Time\nThe word was ");
-        } else {
-          setState(() {
-            _startCountDown--;
-          });
-        }
-      },
-    );
+  getPlayerChoice() async {
+    bool value = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => YouLose()));
+    resetGame(value);
   }
 
   startGame() {
@@ -49,7 +42,6 @@ class _TimerGameState extends State<TimerGame> {
     wordToGuess.clear();
     nosOfGuesses = 5;
     wordsMatched = 0;
-    startTimer();
 
     if (word!.length < 4) {
       hint = 1;
@@ -105,38 +97,23 @@ class _TimerGameState extends State<TimerGame> {
           }
         }
         if (wordsMatched == words.length) {
-          Future.delayed(const Duration(milliseconds: 400), () {
-            showAlertDialog("You guessed the word correctly\nThe word was");
+          verdict = "Correctly Guessed";
+          Future.delayed(const Duration(milliseconds: 800), () {
+            streak += 1;
+            startGame();
           });
         }
       } else {
         if (nosOfGuesses == 1) {
-          showAlertDialog("The word was");
+          Future.delayed(const Duration(milliseconds: 400), () {
+            getPlayerChoice();
+          });
         } else {
           verdict = "Wrong Guess";
           nosOfGuesses -= 1;
         }
       }
     });
-  }
-
-  Widget _renderBottomContent() {
-    return Wrap(
-      spacing: 2.0,
-      alignment: WrapAlignment.center,
-      children: alphabet
-          .map((letter) => ElevatedButton(
-                child: Text(
-                  letter,
-                  style: kLetterText,
-                ),
-                style: ElevatedButton.styleFrom(primary: Colors.blue),
-                onPressed: () {
-                  guessedLetter(letter);
-                },
-              ))
-          .toList(),
-    );
   }
 
   showHintAlert(statement) {
@@ -163,28 +140,36 @@ class _TimerGameState extends State<TimerGame> {
     );
   }
 
-  showAlertDialog(statement) {
-    Widget playButton = TextButton(
-      child: Text("Play Again"),
-      onPressed: () {
-        startGame();
-        Navigator.of(context).pop();
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: Text("Game Over"),
-      content: Text(statement + " $alertBoxWord"),
-      actions: [
-        playButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
+  Widget _renderButtons() {
+    return Wrap(
+      spacing: 2.0,
+      alignment: WrapAlignment.center,
+      children: alphabet
+          .map((letter) => Container(
+              margin: EdgeInsets.only(right: 4, bottom: 4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [Color(0xff6c72cb), Color(0xffcb69c1)],
+                ),
+              ),
+              child: ElevatedButton(
+                child: Text(
+                  letter,
+                  style: kLetterText,
+                ),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.transparent),
+                  shadowColor: MaterialStateProperty.all(Colors.transparent),
+                ),
+                onPressed: () {
+                  guessedLetter(letter);
+                },
+              )))
+          .toList(),
     );
   }
 
@@ -195,11 +180,6 @@ class _TimerGameState extends State<TimerGame> {
   }
 
   @override
-  void dispose() {
-    _timer!.cancel();
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -212,44 +192,23 @@ class _TimerGameState extends State<TimerGame> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Center(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                        size: 50,
-                      ),
-                      Text(
-                        "$nosOfGuesses",
-                        style: kSecondText,
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 35,
+                    ),
+                    Text(
+                      "$nosOfGuesses",
+                      style: kSecondText,
+                    ),
+                  ],
                 ),
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.timer,
-                        color: Colors.white,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3.0),
-                        child: Container(
-                          child: Text(
-                            "$_startCountDown",
-                            style: GoogleFonts.lobster(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: <Widget>[
+                    Text("🔥" + "$streak", style: kSecondText),
+                  ],
                 ),
                 InkWell(
                   child: Row(
@@ -262,7 +221,7 @@ class _TimerGameState extends State<TimerGame> {
                           fontSize: 22,
                           color: Colors.white,
                         ),
-                      ),
+                      )
                     ],
                   ),
                   onTap: () {
@@ -290,20 +249,28 @@ class _TimerGameState extends State<TimerGame> {
               child: Text(wordToGuess.join(), style: kSecondText),
             ),
           ),
+          (verdict == "Correctly Guessed")
+              ? Text(
+                  verdict,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                )
+              : Text(
+                  verdict,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
+                ),
           Container(
-            child: Text(
-              verdict,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
-              ),
-            ),
-          ),
-          Container(
+            margin: EdgeInsets.only(top: 10),
             width: double.infinity,
             color: kPrimeColor,
-            child: _renderBottomContent(),
+            child: _renderButtons(),
           ),
         ],
       ),

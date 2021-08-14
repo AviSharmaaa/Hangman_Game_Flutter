@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hangman_game/constants.dart';
-import 'homePage.dart';
+import 'Screens/homePage.dart';
 
 void main() {
   runApp(MyApp());
