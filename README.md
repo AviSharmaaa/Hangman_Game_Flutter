@@ -1,16 +1,54 @@
-# hangman_game
+## Hangman Game
 
-A new Flutter application.
+A simple Hangman Game build using Flutter framework. It comes with 2 modes, an easy mode which has 5 lives per turn, and a timer mode with 60 secs of the time limit and 5 lives per turn.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Comes with **2 modes** an **Easy Mode** and a **Timer Mode**
+- Player has 5 lives/guesses per turn in **Easy Mode**
+- Player has 5 lives/guesses with an additional time limit of 60 secs in **Timer Mode**
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Screenshots
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Home Page
+<img src="/assets/Screenshots/HomePage.png" />
+
+- Easy Mode
+<img src="/assets/Screenshots/EasyMode.png" />
+
+- Timer Mode
+<img src="/assets/Screenshots/TimerMode.png" />
+
+- No Hints Left
+<img src="/assets/Screenshots/HintsExhausted.png" />
+
+- Game Over
+<img src="/assets/Screenshots/GameOver.png" />
+
+## 🍰 Contributing
+
+Pull Requests are always welcome!
+If you wish to contribute using Github, you can work on any features or create one on your own. After adding your code, send us a Pull Request.
+
+- Please contribute using [GitHub Flow](https://guides.github.com/introduction/flow). Create a branch, add commits, and [open a pull request](https://github.com/AviSharma1305/Hangman_Game_Flutter/compare).
+
+## 🌈 What's next
+
+Here are some ideas that are coming really soon 👀
+
+- **Meaning** of the word as given as 1st hint
+- Storing **Player Scores** locally using [**Sqflite**](https://github.com/tekartik/sqflite "Flutter Database") database
+- **Guessing words** related to a specific field like **Sports Countries Cities** and many more
+
+
+## 🛡️ License
+
+This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+### 👤 Avi Sharma
+
+- Twitter: [@avisharma_exe](https://twitter.com/avisharma_exe)
+- Github: [@AviSharma1305](https://github.com/AviSharma1305)
