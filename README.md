@@ -51,4 +51,4 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 ### 👤 Avi Sharma
 
 - Twitter: [@avisharma_exe](https://twitter.com/avisharma_exe)
-- Github: [@AviSharma1305](https://github.com/AviSharma1305)
+- Github: [@AviSharmaaa](https://github.com/AviSharmaaa)
